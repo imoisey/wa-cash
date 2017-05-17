@@ -60,6 +60,10 @@ class cashEventsAddController extends waJsonController
 		// Сумма штрафа
 		$total_fine = 0;
 		foreach ($contacts as $key => $contact) {
+			// Проверка на себя. Себе нельзя выписать штраф\премию
+			if($contact['contact_id'] == wa()->getUser()->getId())
+				continue;
+
 			// amount не может быть меньше единицы
 			if($contact['amount'] <= 0) {
 				unset($contacts[$key]);

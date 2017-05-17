@@ -13,6 +13,9 @@ class cashViewHelper
 			return false;
 		if( $first_el != false ) {
 			$opt = array(''=>$first_el);
+			// Удаляем себя из списка
+			$user_id = wa()->getUser()->getId();
+			unset($users[$user_id]);
 			foreach ($users as $user_id => $user) {
 				$opt[$user_id] = $user;
 			}
@@ -25,7 +28,7 @@ class cashViewHelper
 
 	/**
 	 * Возвращает массив с пользователями в формате JSON
-	 * @return [type] [description]
+	 * @return
 	 */
 	public static function getUserListJSON($app_id='cash')
 	{
@@ -33,6 +36,9 @@ class cashViewHelper
 		if( !is_array($users) )
 			return false;
 		$mans = array();
+		// Удаляем себя из списка
+		$user_id = wa()->getUser()->getId();
+		unset($users[$user_id]);
 		foreach ($users as $contact_id => $user) {
 			$contact = new waContact($contact_id);
 			$mans[$contact->get('lastname')] = array(
