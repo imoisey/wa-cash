@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>{$wa->appName()} &mdash; {$wa->accountName()}</title>
+	{$wa->css()}
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="{$wa_app_static_url}js/selectize/css/selectize.default.css">
+    <link type="text/css" rel="stylesheet" href="{$wa_app_static_url}css/cash.css?v=1.1">
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-wa/wa.core.js"></script>
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-wa/wa.dialog.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js"></script>
+    <script type="text/javascript" src="{$wa_app_static_url}js/selectize/js/standalone/selectize.js"></script>
+    <link type="text/css" rel="stylesheet" href="{$wa_url}wa-content/js/redactor/redactor.css">
+	<script src="{$wa_url}wa-content/js/redactor/redactor.min.js"></script>
+
+	{* подключение отдельной локализации, если язык пользователя отличается от английского *}
+	{$lang = substr($wa->locale(), 0, 2)}
+	{if $lang != 'en'}<script src="{$wa_url}wa-content/js/redactor/{$lang}.js"></script>{/if}
+
+	<script type="text/javascript">
+	var people_list = '{cashViewHelper::getUserListJSON()}' ? {cashViewHelper::getUserListJSON()} : undefined;
+	{literal}
+		$(function(){
+		    //указываем id элемента, который будет использоваться в качестве контейнера
+		    $('#editor').redactor({
+		    	buttons: ['format', 'bold', 'italic', 'deleted', 'unorderedlist', 'orderedlist', 'alignment', 'link'],
+		    	keydownCallback: function(e)
+				{
+					if(e.ctrlKey && e.keyCode == 13) {
+						e.preventDefault();
+						$('#addevent').trigger('click');
+						return false;
+					}
+				}  
+		    });
+
+		    $('select').selectize({
+		    	placeholder: '[`Выберите...`]',
+		    	
+		    });
+
+
+
+		});
+	{/literal}
+	</script>
+	<script type="text/javascript" src="{$wa_app_static_url}js/cash.js?v=1.2"></script>
+</head>
+<body>
+	<div id="wa">
+		{$wa->header()}
+		<div id="wa-app" class="cash-app">
+			<!-- Основное меню -->
+			<ul class="tabs">
+				<li {if $page == 'events'} class="selected" {/if}><a href="?module=events">[`Касса`]</a></li>
+				<li {if $page == 'reports'} class="selected" {/if}><a href="?module=reports">[`Отчеты`]</a></li>
+				{if $is_admin or isset($settings_right)}
+				<li {if $page == 'settings'} class="selected" {/if} ><a href="?module=settings">[`Настройки`]</a></li>
+				{/if}
+			</ul>
+			<div class="tab-content">
+				{$content}
+			</div>
+		</div>
+	</div>
+</body>
+</html>

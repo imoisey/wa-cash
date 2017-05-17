@@ -1,0 +1,17 @@
+<div class="popup-content">
+    {if $wa->user()->getId()}
+    <div class="block">
+        <h2>[`Статистика за месяц`]</h2>
+        <p class="line">Cумма: <span>{if !empty($total)}{$total}{else}0{/if} р</span></p>
+        <p class="line">Премии: <span>{if !empty($award)}{$award}{else}0{/if} р</span></p>
+        <p class="line">Штрафы: <span>{if !empty($fine)}{$fine}{else}0{/if} р</span></p>
+    </div>
+    <div class="btn-block">
+        <a href="http://dxracer.su/webasyst/cash/" target="blank" class="button">В кассу</a>
+    </div>
+    {else}
+    <div class="btn-block">
+        <a href="http://dxracer.su/webasyst/cash/" target="blank" class="button">Авторизация</a>
+    </div>
+    {/if}
+</div>

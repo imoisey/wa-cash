@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cash\n"
+"POT-Creation-Date: 2016-12-09 12:24+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: cash\n"
+"Language-Team: cash\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /wa-apps/cash/templates/actions/backend/Backend.html:1
+msgid "Касса взаимопомощи"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:13
+#: /wa-apps/cash/templates/actions/settings/Settings.html:22
+msgid "Касса взаимопомощи. Накосячил - помог заработать коллеге."
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:25
+msgid "Выписать премию/штраф"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:86
+msgid "Мои штрафы"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:91
+msgid "Мои премии"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:92
+msgid "Все"
+msgstr "All"
+
+#: /wa-apps/cash/templates/actions/events/Events.html:156
+msgid "Приход в кассу"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/events/Events.html:176
+msgid "Расход из кассы"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/reports/Reports.html:37
+msgid "Итого за период"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/reports/Reports.html:41
+msgid "Остаток на начало периода"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/reports/Reports.html:46
+#: /wa-apps/cash/templates/actions/settings/Settings.html:11
+msgid "Фактически в кассе"
+msgstr ""
+
+#: /wa-apps/cash/templates/actions/reports/Reports.html:53
+msgid "Итого"
+msgstr "Total"
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:1
+#: /wa-apps/cash/templates/layouts/Default.html:49
+msgid "Настройки"
+msgstr "Settings"
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:3
+msgid "Настройки приложения. Доступны только администратору."
+msgstr "Application Settings. Available only to the administrator."
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:17
+msgid "Р"
+msgstr "RUB"
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:20
+msgid "Заголовок"
+msgstr "Title"
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:29
+msgid "Текст шапки"
+msgstr "Text of header"
+
+#: /wa-apps/cash/templates/actions/settings/Settings.html:40
+msgid "Сохранить"
+msgstr "Save"
+
+#: /wa-apps/cash/templates/layouts/Default.html:37
+msgid "Касса"
+msgstr "Cash"
+
+#: /wa-apps/cash/templates/layouts/Default.html:40
+msgid "Отчеты"
+msgstr "Reports"
+
+#: /wa-apps/cash/lib/config/app.php:3
+msgid "Cash"
+msgstr ""

@@ -1,0 +1,58 @@
+<h1>Отчеты</h1>
+<p class="page-description">
+	Формирование отчетов кассира.
+</p>
+<div class="content">
+	<div class="navigation">
+		<form action="?module=reports" method="post">
+			<label>Период: </label>
+			<input type="date" name="start" {if $start}value="{$start}"{/if} required="required">
+			<span>до</span>
+			<input type="date" name="finish" {if $finish}value="{$finish}"{/if} required="required">
+			<div class="buttons">
+				<input type="submit" class="button green" value="Формировать">
+				{if cashViewHelper::getRights('reports')}
+				<a href="?module=reports&action=reconcile&finish={$finish}" class="button green">Свести кассу</a>
+				{/if}
+			</div>
+		</form>
+	</div>	
+	{if is_array($people) and count($people) > 0}
+	<div class="reports-content">
+		<table class="reports-table" border="1">
+			<tr>
+				<th width="50%">Сотрудник</th>
+				<th>Сумма (руб)</th>
+			</tr>
+			{$total = 0}
+			{foreach from=$people item=man}
+			<tr>
+				<td>{$man.name}</td>
+				<td>{$man.total}</td>
+			</tr>
+				{$total_period = $total_period + $man.total}
+			{/foreach}
+			<tr class="last">
+				<td><b>[`Итого за период`]</b></td>
+				<td><b>{$total_period}</b></td>
+			</tr>
+			<tr class="last">
+				<td><b>[`Остаток на начало периода`]</b></td>
+				<td><b>{$begin_amount}</b></td>
+			</tr>
+			<tr class="last">
+				<td><b>[`Фактически в кассе`]</b></td>
+				<td><b>{$true_amount}</b></td>
+			</tr>
+			<tr class="last">
+				<td><b>[`Итого`]</b></td>
+				<td><b>{$begin_amount + (-$total_period)}</b></td>
+			</tr>
+		</table>
+	</div>
+
+	<ul class="navbar">
+		<li><a href="?module=reports&action=print&start={$start_timestamp}&finish={$finish_timestamp}" class="button red">Печать</a></li>
+	</ul>
+	{/if}
+</div>

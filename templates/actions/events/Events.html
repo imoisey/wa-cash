@@ -1,0 +1,249 @@
+<div class="content-top">
+	<span class="total_cash" >В кассе: {if $settings.cash_total}{$settings.cash_total}{else}0{/if}Р</span>
+	{if cashViewHelper::getRights('reports')}
+	<div class="buttons">
+		<a href="?module=events&action=entry" data-dialog-block=".event-cash-entry" class="button green">Приход</a>
+		<a href="?module=events&action=outlay" data-dialog-block=".event-cash-outlay" class="button red">Расход</a>
+	</div>
+	{/if}
+</div>
+
+
+{if $settings.title}
+	<h1>{$settings.title}</h1>
+{else}
+	<h1>[`Касса взаимопомощи. Накосячил - помог заработать коллеге.`]</h1>
+{/if}
+
+{if $settings.headtext}
+<div class="page-description">
+	{$settings.headtext}
+</div>
+{/if}
+
+<div class="add-event">
+	<h4>[`Выписать премию/штраф`]</h4>
+	<div class="profile image96px">
+		<div class="image">
+			<img src="{$user_data.photo}" width="60" height="60" alt="{$user_data.name}">
+		</div>
+		<div class="details" data-limit-awards="{$user_data.limits.awards}" data-limit-fine="{$user_data.limits.fine}" data-limit-man="{$user_data.limits.man}">
+			<div class="row">
+				<div class="col30">
+					<h4>Участники</h4>
+					<p class="no_contact">
+						Нет участников
+					</p>
+					<ul class="contact_list" style="display: none;">
+						
+					</ul>
+				</div>
+				<div class="col50">
+					<h4>Добавить участника</h4>
+					<div class="add-contact">
+						<div class="operation">
+							<input type="radio" name="operation" id="plus" checked="checked" value="-" tabindex="1">
+							<label for="plus">Штраф</label>
+							<input type="radio" name="operation" id="minus" value="+" tabindex="2">
+							<label for="minus">Премия</label>
+						</div>
+						<div class="amount">
+							<input type="text" name="amount" placeholder="50" value="50" tabindex="3"> <span>р.,</span>
+						</div>
+						<div class="contact">
+							{cashViewHelper::getUserList('contact_id', 'Выберите...')}
+						</div>
+						<div class="action-button">
+							<a href="#" class="add_contact" tabindex="6"><i class="icon16 add"></i> [`Добавить участника`]</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="event-content">
+				<textarea name="comment" id="editor" placeholder="Комментарий" tabindex="6"></textarea>
+			</div>
+
+			<div class="row">
+				<div class="col100">
+					<span style="line-height: 140%;">
+					<i>Ctrl + Enter</i> - отправка события.
+					<br>
+					<i>Enter</i> - перенос строки.
+					</span>
+					<div class="buttons" style="margin-top: 10px">
+						<input type="submit" id="addevent" class="button green" value="Выписать" tabindex="7">
+					</div>
+				</div>
+			</div>
+
+			{* <div class="row">
+				<div class="col30">
+					<h4>Участники</h4>
+					<p class="no_contact">
+						Нет участников
+					</p>
+					<ul class="contact_list" style="display: none;">
+						
+					</ul>
+				</div>
+				<div class="col50">
+					<h4>Добавить участника</h4>
+					<div class="add-contact">
+						<div class="operation">
+							<input type="radio" name="operation" id="plus" checked="checked" value="-">
+							<label for="plus">Штраф</label>
+							<input type="radio" name="operation" id="minus" value="+">
+							<label for="minus">Премия</label>
+						</div>
+						<div class="amount">
+							<input type="text" name="amount" placeholder="50" value="50"> <span>р.,</span>
+						</div>
+						<div class="contact">
+							{cashViewHelper::getUserList('contact_id')}
+						</div>
+						<div class="action-button">
+							<a href="#" class="add_contact"><i class="icon16 add"></i> [`Добавить участника`]</a>
+						</div>
+					</div>
+				</div>
+				<div class="col20">
+					<div class="buttons">
+						<input type="submit" id="addevent" class="button green" value="Выписать">
+					</div>
+				</div>
+			</div> *}
+		</div>
+	</div>
+</div>
+
+<!-- Навигация -->
+<div class="navigation event-nav">
+	<div class="row">
+		<div class="col50 nopadding">
+			<nav class="events-menu">
+				<!--
+				{*ID Алексея*}
+				{if $user_data.id == 1}
+					<li><a href="?module=events&action=noactive" data-action-id="get_events">Неподтвержденные</a> <span class="cnt">(0)</span></li>
+				{/if}
+				-->
+				<li><a href="?module=events&action=penalty" data-action-id="get_events">[`Мои штрафы`]</a></li>
+				<li><a href="?module=events&action=premium" data-action-id="get_events">[`Мои премии`]</a></li>
+				<li><a href="?module=events&action=all" data-action-id="get_events">[`Все`]</a></li>
+			</nav>
+		</div>
+		
+		<div class="col50 nopadding">
+			<div class="actions">
+				<!--<form action="?module=events&action=period" method="post" data-action-form="get_period">
+					<label>Период: </label>
+					<input type="date" name="start">
+					<span>до</span>
+					<input type="date" name="finish">
+					<div class="buttons">
+						{* {if $action == 'view'} *}
+						<input type="submit" class="button green" value="Показать">
+						{* {/if} *}
+					</div>
+				</form>-->
+			</div> 
+		</div> 
+	</div>
+</div>
+
+<div class="events-content" data-load="1">
+	<!-- <div class="event" id="event100">
+		<div class="profile image96px">
+			<div class="image">
+				<img src="http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=200&r=pg&d=mm" alt="">
+			</div>
+			<div class="details noactive">
+				<div class="user-info">
+					<span class="fullname">Игорь Моисеев</span>
+					<span class="pubdate">10.10.2016 в 9:57</span>
+					<span class="total-event">=1000р.</span>
+				</div>
+				
+				<div class="event-content">
+					<p>Тест</p>
+				</div>
+
+				<div class="action-active">
+					<div class="buttons">
+						<a href="#" class="button green">Подтвердить</a>
+						<a href="#" class="button red">Отменить</a>
+					</div>
+					<div class="clearbox"></div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	
+	{include file="{$wa_app_path}templates/actions/events/EventsItem.html"}
+
+</div>
+
+<div id="loadingbar" style="display:none;position:fixed;bottom:0;left:0;right:0;background-color:#000;color:#FFF;text-align:center;"><b><i>Загрузка следующих 10...</i></b></div>
+
+<div class="hidden-block" style="display: none;">
+	<div class="event-cash-entry">
+		<form>
+			<div class="dialog-content fields">
+				<h1>[`Приход в кассу`]</h1>
+				<div class="field" >
+					<label for="">Сумма</label>
+					<input type="text" name="total" value="">
+				</div>
+				<div class="field" >
+					<label for="">Комментарий</label>
+					<textarea name="comment"></textarea>
+				</div>
+			</div>
+			<div class="dialog-buttons">
+				<input type="submit" class="button green" value="Выполнить" />
+			</div>
+		</form>
+	</div>
+
+	<div class="event-cash-outlay">
+		<form>
+			<div class="dialog-content fields">
+				<h1>[`Расход из кассы`]</h1>
+				<div class="field" >
+					<label for="">Сумма</label>
+					<input type="text" name="total" value="">
+				</div>
+				<div class="field" >
+					<label for="">Комментарий</label>
+					<textarea name="comment"></textarea>
+				</div>
+			</div>
+			<div class="dialog-buttons">
+				<input type="submit" class="button green" value="Выполнить" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	$(function(){
+		$(".cash-app").on('click', '[data-dialog-block]', function(e){
+			// Адрес обработчика
+			var url = $(this).attr('href');
+			// Всплывающий блок
+			var el = $(this).data('dialog-block');
+			$(el).waDialog({
+				onSubmit: function (d) {
+			       $.post(url, $(this).serialize(), function () {
+			           d.trigger('close'); // закрыть диалог
+			           window.location.reload();
+			       }, 'json');
+			       return false;
+			  	}
+			});
+			return false;
+		});
+	});
+</script>
