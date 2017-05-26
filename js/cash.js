@@ -41,17 +41,17 @@ $(function(){
 			}
 
 			if(limit.man != null && limit.man == 0 && operation == '+') {
-				alert('Вы привысили лимит премий за месяц.');
+				alert('Вы превысили лимит премий за месяц.');
 				return false;
 			}
 
 			if(limit.awards != null && (amount > limit.awards && operation == '+')) {
-				alert('Вы привысили лимит премий за месяц на '+(amount - limit.awards)+' руб.');
+				alert('Вы превысили лимит премий за месяц на '+(amount - limit.awards)+' руб.');
 				return false;
 			}
 
 			if(limit.fine != null && (amount > limit.fine && operation == '-')) {
-				alert('Вы привысили лимит штрафов за месяц на '+(amount - limit.fine)+' руб.');
+				alert('Вы превысили лимит штрафов за месяц на '+(amount - limit.fine)+' руб.');
 				return false;
 			}
 

@@ -30,15 +30,17 @@ class cashViewHelper
 	 * Возвращает массив с пользователями в формате JSON
 	 * @return
 	 */
-	public static function getUserListJSON($app_id='cash')
+	public static function getUserListJSON($app_id='cash', $view_me = false)
 	{
 		$users = waUser::getUsers($app_id);
 		if( !is_array($users) )
 			return false;
 		$mans = array();
 		// Удаляем себя из списка
-		$user_id = wa()->getUser()->getId();
-		unset($users[$user_id]);
+		if($view_me == false) {
+			$user_id = wa()->getUser()->getId();
+			unset($users[$user_id]);
+		}
 		foreach ($users as $contact_id => $user) {
 			$contact = new waContact($contact_id);
 			$mans[$contact->get('lastname')] = array(
