@@ -209,6 +209,7 @@ $(function(){
 	$("[data-action-form]").submit(function(e){
 		var url = $(this).attr('action');
 		$.post(url, $(this).serialize(), function(response){
+			$(".events-content").data('load', 0);
 			$('.events-content').html(response.data);
 			start = 10;
 		});

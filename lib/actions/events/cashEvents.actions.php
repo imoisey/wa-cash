@@ -57,10 +57,16 @@ class cashEventsActions extends waJsonActions
 	{
 		$start = waRequest::post('start');
 		$finish = waRequest::post('finish');
+		if(!wa()->getUser()->isAdmin()) {
+			$contact_id = array(wa()->getUser()->getId());
+		} else {
+			$contact_id = waRequest::post('contact_id');
+		}
+
 		if( empty($start) and empty($finish) )
 			return false;
 		$m_event = new cashEventModel();
-		$events = $m_event->getEventsPeriod($start, $finish);
+		$events = $m_event->getEventsPeriod($start, $finish, $contact_id);
 		// Отображаем события
 		$this->_display($events);
 	}

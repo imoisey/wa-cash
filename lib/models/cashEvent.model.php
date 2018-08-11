@@ -116,18 +116,36 @@ class cashEventModel extends waModel
 		return $event_data;
 	}
 
-	public function getEventsPeriod($start = null, $finish = null)
+	public function getEventsPeriod($start = null, $finish = null, $contact_ids = array())
 	{
 		if( $start and $finish )
-			$where = "pub_date BETWEEN s:start AND s:finish";
+			$where_period = "e.pub_date BETWEEN s:start AND s:finish";
 		else if( $start )
-			$where = "pub_date >= s:start";
+			$where_period = "e.pub_date >= s:start";
 		else if( $finish )
-			$where = "pub_date <= s:finish";
+			$where_period = "e.pub_date <= s:finish";
 		else
 			return false;
 
-		$events = $this->select('id')->where($where, array('start'=>$start, 'finish'=>$finish))->order('pub_date DESC')->fetchAll();
+		if(empty($contact_ids))
+			$where_contacts = "";
+		else
+			$where_contacts = "AND eo.contact_id IN(s:contact_id)";
+
+		$where = "{$where_period} {$where_contacts}";
+
+		$m_event_operation = new cashEventOperationModel();
+		$sql = "SELECT e.id FROM $this->table e
+				LEFT JOIN {$m_event_operation->getTableName()} eo ON eo.event_id = e.id
+				WHERE {$where}
+				ORDER BY e.pub_date DESC";
+		$events = $this->query($sql, 
+								array(
+									'start'=>$start, 
+									'finish'=>$finish, 
+									'contact_id'=>$contact_ids
+								))->fetchAll();
+
 		if( !is_array($events) )
 			return false;
 		$events_data = array();

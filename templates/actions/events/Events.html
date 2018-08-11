@@ -133,7 +133,7 @@
 <!-- Навигация -->
 <div class="navigation event-nav">
 	<div class="row">
-		<div class="col50 nopadding">
+		<div class="col30 nopadding" style="position: relative;">
 			<nav class="events-menu">
 				<!--
 				{*ID Алексея*}
@@ -147,19 +147,32 @@
 			</nav>
 		</div>
 		
-		<div class="col50 nopadding">
-			<div class="actions">
-				<!--<form action="?module=events&action=period" method="post" data-action-form="get_period">
-					<label>Период: </label>
-					<input type="date" name="start">
-					<span>до</span>
-					<input type="date" name="finish">
+		<div class="col70 nopadding">
+			<div class="actions filter-block">
+				<form action="?module=events&action=period" method="post" data-action-form="get_period">
+				{if !$wa->user()->isAdmin()}
+					<label>Мои штрафы и премии за: </label>
+					<input type="date" name="start" value="{date("Y-m-01")}">
+					<span>-</span>
+					<input type="date" name="finish" value="{date("Y-m-d")}">
 					<div class="buttons">
-						{* {if $action == 'view'} *}
 						<input type="submit" class="button green" value="Показать">
-						{* {/if} *}
 					</div>
-				</form>-->
+				{else}
+					<label>Штрафы и премии: </label>
+					<select name="contact_id[]" multiple>
+						{foreach cashViewHelper::getUserListObject('cash', true) as $user}
+							<option value="{$user.contact_id}">{$user.name}</option>
+						{/foreach}
+					</select>
+					<input type="date" name="start" value="{date("Y-m-01")}">
+					<span>-</span>
+					<input type="date" name="finish" value="{date("Y-m-d")}">
+					<div class="buttons">
+						<input type="submit" class="button green" value="Показать">
+					</div>
+				{/if}
+				</form>
 			</div> 
 		</div> 
 	</div>

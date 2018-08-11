@@ -189,11 +189,6 @@ body {
 	margin-right: 10px;
 }
 
-.cash-app .navigation span {
-	display: inline-block;
-	margin:0 10px;
-}
-
 .cash-app .navigation .buttons {
 	display: inline-block;
 	margin:10px;
@@ -417,7 +412,9 @@ body {
 .events-menu {
 	font-size: 16px;
 	list-style: none;
-	padding: 10px;
+	line-height: 54px;
+	position: absolute;
+    bottom: 0;
 }
 
 .events-menu li {
@@ -644,4 +641,16 @@ body {
 .limits-list li span {
     float: right;
     font-weight: bold;
+}
+
+
+.cash-app .filter-block .selectize-control {
+	width: 200px;
+    display: inline-block;
+    top: 12px;
+    margin-right: 10px;
+}
+
+.cash-app .filter-block form {
+	overflow: initial;
 }

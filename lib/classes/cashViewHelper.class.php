@@ -32,6 +32,16 @@ class cashViewHelper
 	 */
 	public static function getUserListJSON($app_id='cash', $view_me = false)
 	{
+		$mans = self::getUserListObject($app_id, $view_me);
+		return json_encode($mans, JSON_UNESCAPED_UNICODE);
+	}
+
+	/**
+	 * Возвращает массив с пользователями
+	 * @return
+	 */
+	public static function getUserListObject($app_id='cash', $view_me = false)
+	{
 		$users = waUser::getUsers($app_id);
 		if( !is_array($users) )
 			return false;
@@ -48,7 +58,7 @@ class cashViewHelper
 				'contact_id' => $contact_id
 			);
 		}
-		return json_encode($mans, JSON_UNESCAPED_UNICODE);
+		return $mans;
 	}
 
 	/**
