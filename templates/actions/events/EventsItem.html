@@ -1,0 +1,36 @@
+{if count($events) > 0}
+{foreach from=$events item=event}
+<div class="event" id="event{$event.id}">
+	<input type="hidden" id="post-shortlink-{$event.id}" value="http://teploson.ru/webasyst/cash/#event{$event.id}">
+	<div class="profile image96px">
+		<div class="image">
+			<img src="{$event.contact.avator}" width="60" height="60" alt="{$event.contact.name}">
+			<span><a class="copy-button" data-copy="#post-shortlink-{$event.id}">#ссылка</a></span>
+		</div>
+		<div class="details">
+			<div class="user-info">
+				<span class="fullname">{$event.contact.name}.</span>
+				<span class="pubdate">{date("d.m.Y в H:i",$event.pub_date|strtotime)}</span>
+				<span class="total-event">{if !empty($event.total) or $event.total === 0 } {$event.total}р. {/if}</span>
+			</div>
+			<div class="event-content">
+				<div class="event-comment">
+				{$event.comment}
+				</div>
+
+				<ul class="event-list">
+					{foreach from=$event.operations item=operation}
+						<li class="{if $operation.amount > 0}plus{else}minus{/if}">{if $operation.amount > 0}+{/if}{$operation.amount}р., {$operation.name}</li>
+					{/foreach}
+				</ul>
+				{if $event.contact_id == cashViewHelper::getUser()->getId()}
+				<span class="edit-button"><a href="javascript:$.editEvent({$event.id});"><i class="icon10 edit"></i> Редактировать</a></span>
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>
+{/foreach}
+{else}
+	<p class="no-result">Нет ни одного события</p>
+{/if}

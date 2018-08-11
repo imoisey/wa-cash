@@ -1,0 +1,80 @@
+<h1>[`Настройки`]</h1>
+<p class="page-description">
+	[`Настройки приложения. Доступны только администратору.`]
+</p>
+<form id="cash-settings-form" action="?module=settings&action=save" method="post">
+	<div class="fields">
+	<!--<div class="field">
+			<div class="name">
+				[`Фактически в кассе`]:
+			</div>
+			<div class="value">
+				<input type="text" name="startmoney" value="{$settings.startmoney}"> [`Р`]
+			</div>
+		</div> -->
+		<div class="field">
+			<div class="name">
+				[`Заголовок`]:
+			</div>
+			<div class="value">
+				<input type="text" name="title" value="{$settings.title}" placeholder="[`Касса взаимопомощи. Накосячил - помог заработать коллеге.`]">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">
+				[`Текст шапки`]:
+			</div>
+			<div class="value">
+				<textarea name="headtext" id="editor">{$settings.headtext}</textarea>
+			</div>
+		</div>
+		{if $wa->user()->getId() == 8319 or $wa->user()->getId() == 37569}
+		<div class="field">
+			<div class="name">
+				[`Лимиты`]:
+			</div>
+			<div class="value">
+				<table class="table">
+					<tr>
+						<th>Сотрудник</th>
+						<th>Лимит премий</th>
+						<th>Лимит штрафов</th>
+						<th>Кол-во человек</th>
+					</tr>
+					{foreach $userlist as $user}
+					<tr>
+						<td>{$user->name}</td>
+						<td><input type="text" class="limit-input" name="limits[{$user->contact_id}][awards]" value="{if $settings.limits[$user->contact_id].awards !== null}{$settings.limits[$user->contact_id].awards}{else}500{/if}" required></td>
+						<td><input type="text" class="limit-input" name="limits[{$user->contact_id}][fine]" value="{if $settings.limits[$user->contact_id].fine !== null}{$settings.limits[$user->contact_id].fine}{else}500{/if}" required></td>
+						<td><input type="text" class="limit-input" name="limits[{$user->contact_id}][cnt]" value="{if $settings.limits[$user->contact_id].cnt !== null}{$settings.limits[$user->contact_id].cnt}{else}10{/if}" required></td>
+					</tr>
+					{/foreach}
+				</table>
+			</div>
+		</div>
+		{/if}
+		<div class="field buttons">
+			<div class="block submit">
+				<input type="submit" class="button green" value="[`Сохранить`]">
+				<span id="wa-editor-status" style="margin-left: 20px; display: none"></span>
+			</div>
+		</div>
+	</div>
+</form>
+
+{literal}
+<script>
+	$(function(){
+		$("#cash-settings-form").on('submit', function(e){
+			var form = $(this);
+			$("#wa-editor-status").html("Сохранение...").fadeIn("slow");
+			$.post(form.attr('action'), form.serialize(), function(response){
+				if(response.status == 'ok') {
+					$("#wa-editor-status").html('Сохранено').fadeOut('slow');
+				}
+			});
+			return false;
+		});
+	});
+</script>
+{/literal}

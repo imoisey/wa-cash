@@ -1,0 +1,42 @@
+<style>
+	.reports-title {
+		text-align: center;
+	}
+
+	.reports-table {
+		margin:0 auto;
+		width:100%;
+	}
+
+	.reports-table td,
+	.reports-table th{
+		padding:5px;
+	}
+
+	.reports-table td.value {
+		text-align: center;
+	}
+</style>
+<body onload="window.print(); window.close(); return false">
+<div>
+{if count($people) > 0}
+<div class="reports-content">
+	<h2 class="reports-title">Касса штрафов за период: <span class="date">{$start}</span> по <span class="date">{$finish}</span> </h2>
+	<table class="reports-table" border="1">
+		<tr>
+			<th width="50%">Сотрудник</th>
+			<th>Сумма (руб)</th>
+		</tr>
+		{$total = 0}
+		{foreach from=$people item=man}
+		<tr>
+			<td class="name">{$man.name}</td>
+			<td class="value">{$man.total}</td>
+		</tr>
+			{$total_period = $total_period + $man.total}
+		{/foreach}
+	</table>
+</div>
+{/if}
+</div>
+</body>

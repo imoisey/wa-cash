@@ -1,0 +1,8 @@
+<p>Сводим кассу за период: {$start} по {$finish}</p>
+{if count($people)>0}
+	<ul class="cash-list">
+	{foreach from=$people item=man}
+		<li><span>{$man.name}</span>: {$man.total}</li>		
+	{/foreach}
+	</ul>
+{/if}
